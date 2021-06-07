@@ -1,5 +1,6 @@
 package io.github.jamsesso.jsonlogic;
 
+import com.google.common.base.Function;
 import io.github.jamsesso.jsonlogic.ast.JsonLogicNode;
 import io.github.jamsesso.jsonlogic.ast.JsonLogicParser;
 import io.github.jamsesso.jsonlogic.evaluator.JsonLogicEvaluator;
@@ -9,7 +10,6 @@ import io.github.jamsesso.jsonlogic.evaluator.expressions.*;
 import java.lang.reflect.Array;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Function;
 
 public final class JsonLogic {
   private final List<JsonLogicExpression> expressions;
@@ -57,7 +57,7 @@ public final class JsonLogic {
     addOperation(MissingExpression.SOME);
   }
 
-  public JsonLogic addOperation(String name, Function<Object[], Object> function) {
+  public JsonLogic addOperation(final String name, final Function<Object[], Object> function) {
     return addOperation(new PreEvaluatedArgumentsExpression() {
       @Override
       public Object evaluate(List arguments, Object data) {

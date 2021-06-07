@@ -5,7 +5,7 @@ import io.github.jamsesso.jsonlogic.evaluator.JsonLogicEvaluationException;
 import java.io.PrintStream;
 import java.util.List;
 
-public class LogExpression implements PreEvaluatedArgumentsExpression {
+public class LogExpression extends PreEvaluatedArgumentsExpression {
   public static final LogExpression STDOUT = new LogExpression(System.out);
 
   private final PrintStream printer;

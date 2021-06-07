@@ -7,14 +7,15 @@ plugins {
 group "io.github.jamsesso"
 version "1.0.6-SNAPSHOT"
 
-sourceCompatibility = 1.8
-targetCompatibility = 1.8
+sourceCompatibility = 1.7
+targetCompatibility = 1.7
 
 repositories {
   mavenCentral()
 }
 
 dependencies {
+  compile "com.google.guava:guava:20.0"
   compile "com.google.code.gson:gson:2.8.5"
   testCompile "junit:junit:4.12"
 }

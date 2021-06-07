@@ -1,11 +1,14 @@
 package io.github.jamsesso.jsonlogic.evaluator.expressions;
 
+import com.google.common.base.Function;
+import com.google.common.base.Functions;
+import com.google.common.base.Joiner;
+import com.google.common.collect.FluentIterable;
 import io.github.jamsesso.jsonlogic.evaluator.JsonLogicEvaluationException;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
-public class ConcatenateExpression implements PreEvaluatedArgumentsExpression {
+public class ConcatenateExpression extends PreEvaluatedArgumentsExpression {
   public static final ConcatenateExpression INSTANCE = new ConcatenateExpression();
 
   private ConcatenateExpression() {
@@ -19,15 +22,18 @@ public class ConcatenateExpression implements PreEvaluatedArgumentsExpression {
 
   @Override
   public Object evaluate(List arguments, Object data) throws JsonLogicEvaluationException {
-    return arguments.stream()
-      .map(obj -> {
-        if (obj instanceof Double && obj.toString().endsWith(".0")) {
-          return ((Double) obj).intValue();
-        }
+    return FluentIterable.from(arguments)
+            .transform(new Function<Object, Object>() {
+              @Override
+              public Object apply(Object obj) {
+                if (obj instanceof Double && obj.toString().endsWith(".0")) {
+                  return ((Double) obj).intValue();
+                }
 
-        return obj;
-      })
-      .map(Object::toString)
-      .collect(Collectors.joining());
+                return obj;
+              }
+            })
+            .transform(Functions.toStringFunction())
+            .join(Joiner.on(""));
   }
 }

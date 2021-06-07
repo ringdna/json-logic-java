@@ -1,28 +1,63 @@
 package io.github.jamsesso.jsonlogic.evaluator.expressions;
 
+import com.google.common.base.Function;
 import io.github.jamsesso.jsonlogic.evaluator.JsonLogicEvaluationException;
 
 import java.util.List;
-import java.util.function.BiFunction;
 
-public class MathExpression implements PreEvaluatedArgumentsExpression {
-  public static final MathExpression ADD = new MathExpression("+", Double::sum);
-  public static final MathExpression SUBTRACT = new MathExpression("-", (a, b) -> a - b, 2);
-  public static final MathExpression MULTIPLY = new MathExpression("*", (a, b) -> a * b);
-  public static final MathExpression DIVIDE = new MathExpression("/", (a, b) -> a / b, 2);
-  public static final MathExpression MODULO = new MathExpression("%", (a, b) -> a % b, 2);
-  public static final MathExpression MIN = new MathExpression("min", Math::min);
-  public static final MathExpression MAX = new MathExpression("max", Math::max);
+public class MathExpression extends PreEvaluatedArgumentsExpression {
+  public static final MathExpression ADD = new MathExpression("+", new Function<Double[], Double>() {
+    @Override
+    public Double apply(Double[] input) {
+      return input[0] + input[1];
+    }
+  });
+  public static final MathExpression SUBTRACT = new MathExpression("-", new Function<Double[], Double>() {
+    @Override
+    public Double apply(Double[] input) {
+      return input[0] - input[1];
+    }
+  }, 2);
+  public static final MathExpression MULTIPLY = new MathExpression("*", new Function<Double[], Double>() {
+    @Override
+    public Double apply(Double[] input) {
+      return input[0] * input[1];
+    }
+  });
+  public static final MathExpression DIVIDE = new MathExpression("/", new Function<Double[], Double>() {
+    @Override
+    public Double apply(Double[] input) {
+      return input[0] / input[1];
+    }
+  }, 2);
+  public static final MathExpression MODULO = new MathExpression("%", new Function<Double[], Double>() {
+    @Override
+    public Double apply(Double[] input) {
+      return input[0] % input[1];
+    }
+  }, 2);
+  public static final MathExpression MIN = new MathExpression("min", new Function<Double[], Double>() {
+    @Override
+    public Double apply(Double[] input) {
+      return Math.min(input[0], input[1]);
+    }
+  });
+  public static final MathExpression MAX = new MathExpression("max", new Function<Double[], Double>() {
+    @Override
+    public Double apply(Double[] input) {
+      return Math.max(input[0], input[1]);
+    }
+  });
 
   private final String key;
-  private final BiFunction<Double, Double, Double> reducer;
+  private final Function<Double[], Double> reducer;
   private final int maxArguments;
 
-  public MathExpression(String key, BiFunction<Double, Double, Double> reducer) {
+  public MathExpression(String key, Function<Double[], Double> reducer) {
     this(key, reducer, 0);
   }
 
-  public MathExpression(String key, BiFunction<Double, Double, Double> reducer, int maxArguments) {
+  public MathExpression(String key, Function<Double[], Double> reducer, int maxArguments) {
     this.key = key;
     this.reducer = reducer;
     this.maxArguments = maxArguments;
@@ -59,7 +94,7 @@ public class MathExpression implements PreEvaluatedArgumentsExpression {
     }
 
     // Collect all of the arguments
-    double[] values = new double[arguments.size()];
+    final double[] values = new double[arguments.size()];
 
     for (int i = 0; i < arguments.size(); i++) {
       Object value = arguments.get(i);
@@ -84,7 +119,7 @@ public class MathExpression implements PreEvaluatedArgumentsExpression {
     double accumulator = values[0];
 
     for (int i = 1; i < values.length && (i < maxArguments || maxArguments == 0); i++) {
-      accumulator = reducer.apply(accumulator, values[i]);
+      accumulator = reducer.apply(new Double[]{accumulator, values[i]});
     }
 
     return accumulator;

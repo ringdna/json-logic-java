@@ -4,7 +4,7 @@ import io.github.jamsesso.jsonlogic.evaluator.JsonLogicEvaluationException;
 
 import java.util.List;
 
-public class NumericComparisonExpression implements PreEvaluatedArgumentsExpression {
+public class NumericComparisonExpression extends PreEvaluatedArgumentsExpression {
   public static final NumericComparisonExpression GT = new NumericComparisonExpression(">");
   public static final NumericComparisonExpression GTE = new NumericComparisonExpression(">=");
   public static final NumericComparisonExpression LT = new NumericComparisonExpression("<");

@@ -1,6 +1,6 @@
 package io.github.jamsesso.jsonlogic.ast;
 
-public class JsonLogicNull implements JsonLogicPrimitive<Object> {
+public class JsonLogicNull extends JsonLogicPrimitive<Object> {
   public static final JsonLogicNull NULL = new JsonLogicNull();
 
   private JsonLogicNull() {

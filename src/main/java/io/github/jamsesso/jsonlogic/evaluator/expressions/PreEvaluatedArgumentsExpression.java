@@ -8,11 +8,11 @@ import io.github.jamsesso.jsonlogic.evaluator.JsonLogicExpression;
 
 import java.util.List;
 
-public interface PreEvaluatedArgumentsExpression extends JsonLogicExpression {
-  Object evaluate(List arguments, Object data) throws JsonLogicEvaluationException;
+public abstract class PreEvaluatedArgumentsExpression implements JsonLogicExpression {
+  public abstract Object evaluate(List arguments, Object data) throws JsonLogicEvaluationException;
 
   @Override
-  default Object evaluate(JsonLogicEvaluator evaluator, JsonLogicArray arguments, Object data)
+  public Object evaluate(JsonLogicEvaluator evaluator, JsonLogicArray arguments, Object data)
     throws JsonLogicEvaluationException {
     List<Object> values = evaluator.evaluate(arguments, data);
 

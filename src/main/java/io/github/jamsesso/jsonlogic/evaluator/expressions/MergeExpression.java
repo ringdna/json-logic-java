@@ -1,15 +1,14 @@
 package io.github.jamsesso.jsonlogic.evaluator.expressions;
 
+import com.google.common.base.Function;
+import com.google.common.collect.FluentIterable;
 import io.github.jamsesso.jsonlogic.evaluator.JsonLogicEvaluationException;
 import io.github.jamsesso.jsonlogic.utils.ArrayLike;
 
-import java.util.Collection;
 import java.util.Collections;
 import java.util.List;
-import java.util.function.Function;
-import java.util.stream.Collectors;
 
-public class MergeExpression implements PreEvaluatedArgumentsExpression {
+public class MergeExpression extends PreEvaluatedArgumentsExpression {
   public static final MergeExpression INSTANCE = new MergeExpression();
 
   private MergeExpression() {
@@ -23,10 +22,12 @@ public class MergeExpression implements PreEvaluatedArgumentsExpression {
 
   @Override
   public Object evaluate(List arguments, Object data) throws JsonLogicEvaluationException {
-    return ((List<Object>) arguments).stream()
-      .map(obj -> ArrayLike.isEligible(obj) ? new ArrayLike(obj) : Collections.singleton(obj))
-      .map(Collection::stream)
-      .flatMap(Function.identity())
-      .collect(Collectors.toList());
+    return FluentIterable.from((List<Object>) arguments)
+            .transformAndConcat(new Function<Object, List<Object>>() {
+              @Override
+              public List<Object> apply(Object obj) {
+                return ArrayLike.isEligible(obj) ? new ArrayLike(obj) : (List<Object>) Collections.singleton(obj);
+              }
+            }).toList();
   }
 }

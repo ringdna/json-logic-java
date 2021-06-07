@@ -1,6 +1,6 @@
 package io.github.jamsesso.jsonlogic.ast;
 
-public class JsonLogicNumber implements JsonLogicPrimitive<Double> {
+public class JsonLogicNumber extends JsonLogicPrimitive<Double> {
   private final Number value;
 
   public JsonLogicNumber(Number value) {

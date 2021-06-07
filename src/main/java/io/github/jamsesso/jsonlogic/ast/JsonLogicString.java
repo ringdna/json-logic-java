@@ -1,6 +1,6 @@
 package io.github.jamsesso.jsonlogic.ast;
 
-public class JsonLogicString implements JsonLogicPrimitive<String> {
+public class JsonLogicString extends JsonLogicPrimitive<String> {
   private final String value;
 
   public JsonLogicString(String value) {

@@ -5,7 +5,6 @@ import io.github.jamsesso.jsonlogic.evaluator.JsonLogicEvaluator;
 
 import java.lang.reflect.Array;
 import java.util.*;
-import java.util.stream.Collectors;
 
 public class ArrayLike implements List<Object> {
   private final List<Object> delegate;
@@ -13,10 +12,11 @@ public class ArrayLike implements List<Object> {
   @SuppressWarnings("unchecked")
   public ArrayLike(Object data) {
     if (data instanceof List) {
-      delegate = ((List<Object>) data)
-              .stream()
-              .map(JsonLogicEvaluator::transform)
-              .collect(Collectors.toList());
+      delegate = new ArrayList<>();
+      List<Object> lDdata = (List<Object>) data;
+      for (Object object : lDdata) {
+        delegate.add(JsonLogicEvaluator.transform(object));
+      }
     }
     else if (data != null && data.getClass().isArray()) {
       delegate = new ArrayList<>();

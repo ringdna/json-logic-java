@@ -6,7 +6,7 @@ import io.github.jamsesso.jsonlogic.utils.MapLike;
 
 import java.util.*;
 
-public class MissingExpression implements PreEvaluatedArgumentsExpression {
+public class MissingExpression extends PreEvaluatedArgumentsExpression {
   public static final MissingExpression ALL = new MissingExpression(false);
   public static final MissingExpression SOME = new MissingExpression(true);
 

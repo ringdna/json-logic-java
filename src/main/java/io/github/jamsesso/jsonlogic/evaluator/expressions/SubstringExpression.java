@@ -4,7 +4,7 @@ import io.github.jamsesso.jsonlogic.evaluator.JsonLogicEvaluationException;
 
 import java.util.List;
 
-public class SubstringExpression implements PreEvaluatedArgumentsExpression {
+public class SubstringExpression extends PreEvaluatedArgumentsExpression {
   public static final SubstringExpression INSTANCE = new SubstringExpression();
 
   private SubstringExpression() {

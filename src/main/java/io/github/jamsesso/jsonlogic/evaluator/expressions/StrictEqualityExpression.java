@@ -4,7 +4,7 @@ import io.github.jamsesso.jsonlogic.evaluator.JsonLogicEvaluationException;
 
 import java.util.List;
 
-public class StrictEqualityExpression implements PreEvaluatedArgumentsExpression {
+public class StrictEqualityExpression extends PreEvaluatedArgumentsExpression {
   public static final StrictEqualityExpression INSTANCE = new StrictEqualityExpression();
 
   private StrictEqualityExpression() {

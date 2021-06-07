@@ -5,7 +5,7 @@ import io.github.jamsesso.jsonlogic.utils.ArrayLike;
 
 import java.util.List;
 
-public class InExpression implements PreEvaluatedArgumentsExpression {
+public class InExpression extends PreEvaluatedArgumentsExpression {
   public static final InExpression INSTANCE = new InExpression();
 
   private InExpression() {

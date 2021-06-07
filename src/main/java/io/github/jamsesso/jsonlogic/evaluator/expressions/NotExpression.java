@@ -4,7 +4,7 @@ import io.github.jamsesso.jsonlogic.JsonLogic;
 
 import java.util.List;
 
-public class NotExpression implements PreEvaluatedArgumentsExpression {
+public class NotExpression extends PreEvaluatedArgumentsExpression {
   public static final NotExpression SINGLE = new NotExpression(false);
   public static final NotExpression DOUBLE = new NotExpression(true);
 

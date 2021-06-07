@@ -1,6 +1,6 @@
 package io.github.jamsesso.jsonlogic.ast;
 
-public class JsonLogicBoolean implements JsonLogicPrimitive<Boolean> {
+public class JsonLogicBoolean extends JsonLogicPrimitive<Boolean> {
   public static final JsonLogicBoolean TRUE = new JsonLogicBoolean(true);
   public static final JsonLogicBoolean FALSE = new JsonLogicBoolean(false);
 

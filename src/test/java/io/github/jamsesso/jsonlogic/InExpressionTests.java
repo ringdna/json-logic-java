@@ -1,12 +1,11 @@
 package io.github.jamsesso.jsonlogic;
 
+import com.google.common.collect.ImmutableMap;
 import org.junit.Test;
 
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.Map;
-import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -49,10 +48,7 @@ public class InExpressionTests {
 
   @Test
   public void testAllVariables() throws JsonLogicException {
-    Map data = Stream.of(new Object[][] {
-      new Object[] {"list", Arrays.asList(1, 2, 3)},
-      new Object[] {"value", 3}
-    }).collect(Collectors.toMap(o -> o[0], o -> o[1]));
+    ImmutableMap data = ImmutableMap.of("list", Arrays.asList(1, 2, 3), "value", 3);
 
     assertEquals(true, jsonLogic.apply("{\"in\": [{\"var\": \"value\"}, {\"var\": \"list\"}]}", data));
   }

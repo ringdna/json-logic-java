@@ -1,5 +1,7 @@
 package io.github.jamsesso.jsonlogic.evaluator;
 
+import com.google.common.base.Function;
+import com.google.common.base.Optional;
 import io.github.jamsesso.jsonlogic.ast.*;
 import io.github.jamsesso.jsonlogic.utils.ArrayLike;
 
@@ -8,7 +10,7 @@ import java.util.*;
 public class JsonLogicEvaluator {
   private final Map<String, JsonLogicExpression> expressions = new HashMap<>();
 
-  public JsonLogicEvaluator(Collection<JsonLogicExpression> expressions) {
+  public JsonLogicEvaluator(Collection<? extends JsonLogicExpression> expressions) {
     for (JsonLogicExpression expression : expressions) {
       this.expressions.put(expression.key(), expression);
     }
@@ -43,8 +45,13 @@ public class JsonLogicEvaluator {
 
     if (key == null) {
       return Optional.of(data)
-        .map(JsonLogicEvaluator::transform)
-        .orElse(evaluate(variable.getDefaultValue(), null));
+        .transform(new Function<Object, Object>() {
+          @Override
+          public Object apply(Object input) {
+            return transform(input);
+          }
+        })
+        .or(evaluate(variable.getDefaultValue(), null));
     }
 
     if (key instanceof Number) {
