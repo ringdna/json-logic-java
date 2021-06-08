@@ -36,6 +36,7 @@ artifacts {
 
 if (project.hasProperty('release')) {
   signing {
+    useInMemoryPgpKeys(signingKey, signingKeyPassword)
     sign configurations.archives
   }
 }
