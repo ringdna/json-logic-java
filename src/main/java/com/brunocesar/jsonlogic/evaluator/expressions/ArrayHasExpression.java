@@ -8,48 +8,44 @@ import com.brunocesar.jsonlogic.evaluator.JsonLogicExpression;
 import com.brunocesar.jsonlogic.utils.ArrayLike;
 
 public class ArrayHasExpression implements JsonLogicExpression {
-  public static final ArrayHasExpression SOME = new ArrayHasExpression(true);
-  public static final ArrayHasExpression NONE = new ArrayHasExpression(false);
+    public static final ArrayHasExpression SOME = new ArrayHasExpression(true);
+    public static final ArrayHasExpression NONE = new ArrayHasExpression(false);
 
-  private final boolean isSome;
+    private final boolean isSome;
 
-  private ArrayHasExpression(boolean isSome) {
-    this.isSome = isSome;
-  }
-
-  @Override
-  public String key() {
-    return isSome ? "some" : "none";
-  }
-
-  @Override
-  public Object evaluate(JsonLogicEvaluator evaluator, JsonLogicArray arguments, Object data)
-    throws JsonLogicEvaluationException {
-    if (arguments.size() != 2) {
-      throw new JsonLogicEvaluationException("some expects exactly 2 arguments");
+    private ArrayHasExpression(boolean isSome) {
+        this.isSome = isSome;
     }
 
-    Object maybeArray = evaluator.evaluate(arguments.get(0), data);
-
-    // Array objects can have null values according to http://jsonlogic.com/
-    if (maybeArray == null) {
-      if (isSome) {
-        return false;
-      } else {
-        return true;
-      }
+    @Override
+    public String key() {
+        return isSome ? "some" : "none";
     }
 
-    if (!ArrayLike.isEligible(maybeArray)) {
-      throw new JsonLogicEvaluationException("first argument to some must be a valid array");
-    }
+    @Override
+    public Object evaluate(JsonLogicEvaluator evaluator, JsonLogicArray arguments, Object data)
+            throws JsonLogicEvaluationException {
+        if (arguments.size() != 2) {
+            throw new JsonLogicEvaluationException("some expects exactly 2 arguments");
+        }
 
-    for (Object item : new ArrayLike(maybeArray)) {
-      if(JsonLogic.truthy(evaluator.evaluate(arguments.get(1), item))) {
-        return isSome;
-      }
-    }
+        Object maybeArray = evaluator.evaluate(arguments.get(0), data);
 
-    return !isSome;
-  }
+        // Array objects can have null values according to http://jsonlogic.com/
+        if (maybeArray == null) {
+          return !isSome;
+        }
+
+        if (!ArrayLike.isEligible(maybeArray)) {
+            throw new JsonLogicEvaluationException("first argument to some must be a valid array");
+        }
+
+        for (Object item : new ArrayLike(maybeArray)) {
+            if (JsonLogic.truthy(evaluator.evaluate(arguments.get(1), item))) {
+                return isSome;
+            }
+        }
+
+        return !isSome;
+    }
 }

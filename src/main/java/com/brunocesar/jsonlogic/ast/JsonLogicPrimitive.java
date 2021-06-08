@@ -1,12 +1,12 @@
 package com.brunocesar.jsonlogic.ast;
 
 public abstract class JsonLogicPrimitive<T> implements JsonLogicNode {
-  public abstract T getValue();
+    public abstract T getValue();
 
-  public abstract JsonLogicPrimitiveType getPrimitiveType();
+    public abstract JsonLogicPrimitiveType getPrimitiveType();
 
-  @Override
-  public JsonLogicNodeType getType() {
-    return JsonLogicNodeType.PRIMITIVE;
-  }
+    @Override
+    public JsonLogicNodeType getType() {
+        return JsonLogicNodeType.PRIMITIVE;
+    }
 }

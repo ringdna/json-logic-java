@@ -1,8 +1,8 @@
 package com.brunocesar.jsonlogic.ast;
 
 public enum JsonLogicNodeType {
-  PRIMITIVE,
-  VARIABLE,
-  ARRAY,
-  OPERATION
+    PRIMITIVE,
+    VARIABLE,
+    ARRAY,
+    OPERATION
 }
