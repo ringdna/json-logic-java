@@ -18,8 +18,8 @@ public final class JsonValueExtractor {
             Map<String, Object> map = new HashMap<>();
             JsonObject object = element.getAsJsonObject();
 
-            for (String key : object.keySet()) {
-                map.put(key, extract(object.get(key)));
+            for (Map.Entry<String, JsonElement> entry : object.entrySet()) {
+                map.put(entry.getKey(), extract(object.get(entry.getKey())));
             }
 
             return map;

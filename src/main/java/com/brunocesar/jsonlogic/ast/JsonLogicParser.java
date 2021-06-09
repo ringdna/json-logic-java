@@ -66,11 +66,11 @@ public final class JsonLogicParser {
         // Handle objects & variables
         JsonObject object = root.getAsJsonObject();
 
-        if (object.keySet().size() != 1) {
-            throw new JsonLogicParseException("objects must have exactly 1 key defined, found " + object.keySet().size());
+        if (object.size() != 1) {
+            throw new JsonLogicParseException("objects must have exactly 1 key defined, found " + object.size());
         }
 
-        String key = object.keySet().iterator().next();
+        String key = object.entrySet().iterator().next().getKey();
         JsonLogicNode argumentNode = parse(object.get(key));
         JsonLogicArray arguments;
 
