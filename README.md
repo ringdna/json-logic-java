@@ -39,7 +39,13 @@ You can add your own operations like so:
 
 ```java
 // Register an operation.
-jsonLogic.addOperation("greet", (args) -> "Hello, " + args[0] + "!");
+jsonLogic.addOperation("greet", new com.google.common.base.Function<Object[], Object>() {
+            @Override
+            public String apply(Object[] args) {
+                return "Hello, " + args[0] + "!";
+            }
+        }
+);
 
 // Evaluate the result.
 String result = (String) jsonLogic.apply("{\"greet\": [\"Sam\"]}", null);
