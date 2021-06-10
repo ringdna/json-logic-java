@@ -4,7 +4,7 @@ plugins {
   id "signing"
 }
 
-group "com.brunocesar"
+group "com.ringdna"
 version "1.0.0-SNAPSHOT"
 
 sourceCompatibility = 1.7
@@ -62,18 +62,18 @@ uploadArchives {
         artifactId "json-logic-java"
         packaging "jar"
         description "A native Java implementation of the json-logic project"
-        url "https://github.com/brunocesarsilva/json-logic-java"
+        url "https://github.com/ringdna/json-logic-java"
 
         scm {
-          connection "scm:git@github.com:brunocesarsilva/json-logic-java.git"
-          developerConnection "scm:git@github.com:brunocesarsilva/json-logic-java.git"
-          url "https://github.com/brunocesarsilva/json-logic-java.git"
+          connection "scm:git@github.com:ringdna/json-logic-java.git"
+          developerConnection "scm:git@github.com:ringdna/json-logic-java.git"
+          url "https://github.com/ringdna/json-logic-java.git"
         }
 
         licenses {
           license {
             name "MIT License"
-            url "https://github.com/brunocesarsilva/json-logic-java/blob/master/LICENSE"
+            url "https://github.com/ringdna/json-logic-java/blob/master/LICENSE"
           }
         }
 

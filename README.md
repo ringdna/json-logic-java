@@ -9,7 +9,7 @@ JsonLogic is documented extensively at [JsonLogic.com](http://jsonlogic.com), in
 
 ```xml
 <dependency>
-  <groupId>com.brunocesar</groupId>
+  <groupId>com.ringdna</groupId>
   <artifactId>json-logic-java</artifactId>
   <version>1.0.0</version>
 </dependency>
